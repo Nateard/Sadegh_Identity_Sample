@@ -39,38 +39,50 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailConfirmed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessFailedCount)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit","users", new { id=item.Id , area="Admin" }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", "users",new  { id = item.Id, area = "Admin" })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessFailedCount)
+                </td>
+                <td>
+@*                     @Html.ActionLink("Edit", "Edit", "users", new { id = item.Id, area = "Admin" }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", "users", new { id = item.Id, area = "Admin" })
+                    @Html.ActionLink("AddRole", "AddUserRole", "users", new { id = item.Id, area = "Admin" }) *@
+                  @*   @Html.ActionLink("Edit", "Edit", "Users", new { id = item.Id, area = "Admin" }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", "Users", new { id = item.Id, area = "Admin" })|
+                    @Html.ActionLink("Add Role", "AddUserRole", "Users", new { id = item.Id, area = "Admin" })|
+                    @Html.ActionLink("User Roles", "UserInRole", "Role", new { Name = item.UserName, area = "Admin" }) *@
+                <td>
+                        @Html.ActionLink("Edit", "Edit", "Users", new { id = item.Id, area = "Admin" }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", "Users", new { id = item.Id, area = "Admin" })|
+                        @Html.ActionLink("Add Role", "AddUserRole", "Users", new { id = item.Id, area = "Admin" })|
+                        @Html.ActionLink("User Roles", "UserRoles", "Users", new { id = item.Id, area = "Admin" })
+                </td>
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

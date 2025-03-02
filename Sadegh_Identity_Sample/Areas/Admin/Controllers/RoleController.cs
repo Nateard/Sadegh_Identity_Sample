@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sadegh_Identity_Sample.Areas.Admin.Models.Dto.Roles;
+using Sadegh_Identity_Sample.Areas.Admin.Models.Dto.Users;
 using Sadegh_Identity_Sample.Models.Entities;
 
 namespace Sadegh_Identity_Sample.Areas.Admin.Controllers
@@ -9,9 +10,11 @@ namespace Sadegh_Identity_Sample.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         private readonly RoleManager<Role> _roleManager;
-        public RoleController(RoleManager<Role> roleManager)
+        private readonly UserManager<User> _userManager;
+        public RoleController(RoleManager<Role> roleManager, UserManager<User> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -47,5 +50,25 @@ namespace Sadegh_Identity_Sample.Areas.Admin.Controllers
              ViewBag.Errors = result.Errors.ToList();
             return View(newRole);
         }
+
+
+
+        public async Task <IActionResult> UserInRole(string name)
+        {
+            var usersInRole = (await _userManager.GetUsersInRoleAsync(name))
+          .Select(p => new UserListDto
+          {
+              Id = p.Id,
+              Email = p.Email,
+              FirstName = p.FirstName,
+              LastName = p.LastName,
+              PhoneNumber = p.PhoneNumber
+          }).ToList();
+
+            return View(usersInRole);
+        }
     }
+
+
+ 
 }
