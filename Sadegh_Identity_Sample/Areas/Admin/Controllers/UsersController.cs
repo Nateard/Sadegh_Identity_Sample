@@ -182,6 +182,7 @@ namespace Sadegh_Identity_Sample.Areas.Admin.Controllers
 
             var result = await _userManager.GetRolesAsync(user);
 
+            ViewBag.UserName = user.UserName;
             return View(result);
         }
     }
