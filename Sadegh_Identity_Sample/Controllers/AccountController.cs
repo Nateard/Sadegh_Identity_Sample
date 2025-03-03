@@ -7,10 +7,7 @@ using Sadegh_Identity_Sample.Models.Dto.Account;
 using Sadegh_Identity_Sample.Models.DTO;
 using Sadegh_Identity_Sample.Models.Entities;
 using Sadegh_Identity_Sample.Services.EmailServices;
-<<<<<<< HEAD
 using Sadegh_Identity_Sample.Services.SMSServices;
-=======
->>>>>>> 1a671126b8a6430c14b731a8d4883dd01c73985e
 
 namespace Sadegh_Identity_Sample.Controllers
 {
@@ -138,7 +135,6 @@ namespace Sadegh_Identity_Sample.Controllers
             }
             return RedirectToAction("Login");
         }
-<<<<<<< HEAD
 
         public IActionResult DisplayEmail()
         {
@@ -263,7 +259,8 @@ namespace Sadegh_Identity_Sample.Controllers
 
 
         public IActionResult VerifySuccess()
-        { 
+        {
+
             return View();
         }
     }
