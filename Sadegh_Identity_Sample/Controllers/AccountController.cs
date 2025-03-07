@@ -10,6 +10,7 @@ using Sadegh_Identity_Sample.Models.DTO;
 using Sadegh_Identity_Sample.Models.Entities;
 using Sadegh_Identity_Sample.Services.EmailServices;
 using Sadegh_Identity_Sample.Services.SMSServices;
+using System.Security.Claims;
 
 namespace Sadegh_Identity_Sample.Controllers
 {
@@ -361,6 +362,67 @@ namespace Sadegh_Identity_Sample.Controllers
         }
 
 
+        public IActionResult ExternalLogin(string ReturnUrl)
+        {
+            string url = Url.Action(nameof(CallBack), "Account", new
+            {
+                ReturnUrl
+            });
+
+            var propertis = _signInManager
+                .ConfigureExternalAuthenticationProperties("Google", url);
+
+            return new ChallengeResult("Google", propertis);
+        }
+
+        public IActionResult CallBack(string ReturnUrl)
+        {
+            var loginInfo = _signInManager.GetExternalLoginInfoAsync().Result;
+
+            string email = loginInfo.Principal.FindFirst(ClaimTypes.Email)?.Value ?? null;
+            if (email == null)
+            {
+                return BadRequest();
+            }
+            string FirstName = loginInfo.Principal.FindFirst(ClaimTypes.GivenName)?.Value ?? null;
+            string LastName = loginInfo.Principal.FindFirst(ClaimTypes.Surname)?.Value ?? null;
+
+            var signin = _signInManager.ExternalLoginSignInAsync("Google", loginInfo.ProviderKey
+                , false, true).Result;
+            if (signin.Succeeded)
+            {
+                if (Url.IsLocalUrl(ReturnUrl))
+                {
+                    return Redirect("~/");
+
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            else if (signin.RequiresTwoFactor)
+            {
+                //
+            }
+
+            var user = _userManager.FindByEmailAsync(email).Result;
+            if (user == null)
+            {
+                User newUser = new User()
+                {
+                    UserName = email,
+                    Email = email,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    EmailConfirmed = true,
+                };
+                var resultAdduser = _userManager.CreateAsync(newUser).Result;
+                user = newUser;
+            }
+            var resultAddlogin = _userManager.AddLoginAsync(user, loginInfo).Result;
+            _signInManager.SignInAsync(user, false).Wait();
+
+
+            return Redirect("/");
+        } 
 
     }
     

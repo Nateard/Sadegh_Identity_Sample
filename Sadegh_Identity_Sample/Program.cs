@@ -38,9 +38,15 @@ builder.Services.AddAuthorization(options =>
     {
         policy.AddRequirements(new BlogRequirement());
     });
-}
+});
 
-);
+builder.Services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "";
+                    options.ClientSecret = "";
+                }
+                );
 
 builder.Services.Configure<IdentityOptions>(option =>
 {
