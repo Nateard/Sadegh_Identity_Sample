@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sadegh_Identity_Sample.Models;
 
@@ -27,6 +28,24 @@ namespace Sadegh_Identity_Sample.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize(Policy = "Buyer")]
+        public string JustBuyer()
+        {
+            return "??? ?????? ?????";
+        }
+
+        [Authorize(Policy = "BloodType")]
+        public string Blood()
+        {
+            return "Ap and O";
+        }
+
+        [Authorize(Policy = "Credit")]
+        public string Credit()
+        {
+            return "ok";
         }
     }
 }

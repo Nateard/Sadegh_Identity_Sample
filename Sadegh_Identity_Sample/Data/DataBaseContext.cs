@@ -14,7 +14,7 @@ namespace Sadegh_Identity_Sample.Data
         {
                 
         }
-
+        public DbSet<Blog> Blogs { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<IdentityUserLogin<string>>().HasKey(p=> new {p.ProviderKey , p.LoginProvider});

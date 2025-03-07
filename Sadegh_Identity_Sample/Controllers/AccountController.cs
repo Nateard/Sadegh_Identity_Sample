@@ -354,6 +354,11 @@ namespace Sadegh_Identity_Sample.Controllers
         }
 
 
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
 
 

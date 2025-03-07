@@ -6,13 +6,8 @@ namespace Sadegh_Identity_Sample.Models.Entities
     {
 
         public string FirstName { get; set; }
-        public string LastName { get; set; }      
-    }
+        public string LastName { get; set; }
 
-
-
-    public class Role : IdentityRole
-    {
-        public string Description { get; set; }
+        public ICollection<Blog> Blogs { get; set; }
     }
 }
